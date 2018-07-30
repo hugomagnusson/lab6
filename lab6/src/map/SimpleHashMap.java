@@ -53,20 +53,16 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K arg0, V arg1) {
-		if ((double) (size + 1) / capacity >= loadFac) {
+		if ((double) (size + 1) / capacity > loadFac) {
 			rehash();
-			// return put(arg0, arg1);
 		}
-		// System.out.println("gay");
 		int index = index(arg0);
 
 		Entry<K, V> found = find(index, arg0);
-		// System.out.println("gay found");
 
 		if (found == null) {
 			Entry<K, V> temp = table[index];
 			if (temp != null) {
-				// System.out.println("gay1");
 
 				while (temp.next != null) {
 					temp = temp.next;
@@ -76,7 +72,6 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
 				size++;
 				return null;
 			} else {
-				// System.out.println("gay2");
 
 				table[index] = new Entry<K, V>(arg0, arg1);
 				size++;
@@ -98,8 +93,8 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
 			return null;
 		}
 		Entry<K, V> temp = table[index];
-		if (temp.getKey() != key) {
-			while (temp.next.getKey() != key) {
+		if (!temp.getKey().equals(key)) {
+			while (!temp.next.getKey().equals(key)) {
 				temp = temp.next;
 			}
 			V val = temp.next.getValue();
@@ -164,7 +159,7 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
 		}
 		Entry<K, V> temp = table[index];
 		while (temp != null) {
-			if (temp.getKey() == key) {
+			if (temp.getKey().equals(key)) {
 				return temp;
 			}
 			temp = temp.next;
@@ -218,7 +213,7 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
 
 		@Override
 		public V setValue(V value) {
-			V old = value;
+			V old = this.value;
 			this.value = value;
 			return old;
 		}
